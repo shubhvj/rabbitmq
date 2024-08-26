@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const submitForm = async(e) => {
+            e.preventDefault()
+            const orderInput = document.getElementById('order')
+            const order = orderInput.value
+            if (order.trim() < 1) {
+                return
+            }
+            const response = await fetch('http://localhost:8000', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({ order })
+            })
+            orderInput.value = ''
+        }
+    </script>
+    <h1>Orders</h1>
+    <form onsubmit="submitForm(event)">
+        <input type="text" name="order" id="order" placeholder="Order" />
+        <button type="submit">Send Order</button>
+    </form>
+</body>
+</html>
